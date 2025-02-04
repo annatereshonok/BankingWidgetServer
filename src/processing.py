@@ -10,12 +10,12 @@ def filter_by_state(processed_info: List[Dict[str, Any]], state: str = "EXECUTED
     'state' соответствует заданному состоянию.
 
     Параметры:
-    processed_info (List[Dict[str, Any]]): Список словарей, содержащий информацию о процессах.
-    state (str): Состояние, по которому будет производиться фильтрация.
+        processed_info (List[Dict[str, Any]]): Список словарей, содержащий информацию о процессах.
+        state (str): Состояние, по которому будет производиться фильтрация.
                  По умолчанию используется значение 'EXECUTED'.
 
     Возвращает:
-    List[Dict[str, Any]]: Список словарей, отфильтрованных по заданному состоянию.
+        List[Dict[str, Any]]: Список словарей, отфильтрованных по заданному состоянию.
     """
 
     filtered_info = [item for item in processed_info if item.get("state") == state]
@@ -40,12 +40,12 @@ def sort_by_date(processed_info: List[Dict[str, Any]], reverse_bool: bool = True
     в зависимости от значения параметра `reverse_bool`.
 
     Параметры:
-    processed_info (List[Dict[str, Any]]): Список словарей, содержащий информацию о процессах.
-    reverse_bool (bool): Если True, сортировка будет выполнена в обратном порядке.
-                         По умолчанию True (обратный порядок).
+        processed_info (List[Dict[str, Any]]): Список словарей, содержащий информацию о процессах.
+        reverse_bool (bool): Если True, сортировка будет выполнена в обратном порядке.
+                            По умолчанию True (обратный порядок).
 
     Возвращает:
-    List[Dict[str, Any]]: Отсортированный список словарей по дате.
+        List[Dict[str, Any]]: Отсортированный список словарей по дате.
     """
 
     sorted_info = sorted(processed_info, key=lambda x: x["date"], reverse=reverse_bool)

@@ -1,16 +1,13 @@
-from typing import Union
-
-
-def get_mask_card_number(card_number: Union[str, int]) -> str:
+def get_mask_card_number(card_number: str) -> str:
     """
     Маскирует номер кредитной карты, отображая его в формате:
     XXXX XX** **** XXXX, где X — это цифра номера.
 
     Параметры:
-    card_number (str): Номер карты в строковом формате.
+        card_number (str): Номер карты в строковом формате.
 
     Возвращает:
-    str: Замаскированный номер карты.
+        str: Замаскированный номер карты.
     """
     if not card_number or card_number.strip() == "":
         raise ValueError("Номер карты не может быть пустым")
@@ -29,16 +26,16 @@ def get_mask_card_number(card_number: Union[str, int]) -> str:
     return masked_number
 
 
-def get_mask_account(account_number: Union[str, int]) -> str:
+def get_mask_account(account_number: str) -> str:
     """
     Маскирует номер счета, отображая его в формате:
     **XXXX, где X — это цифра номера.
 
     Параметры:
-    account_number (str): Номер счета в строковом формате.
+        account_number (str): Номер счета в строковом формате.
 
     Возвращает:
-    str: Замаскированный номер счета.
+        str: Замаскированный номер счета.
     """
     if not account_number or account_number.strip() == "":
         raise ValueError("Номер счета не может быть пустым")
@@ -53,6 +50,3 @@ def get_mask_account(account_number: Union[str, int]) -> str:
 
     account_number = f"**{account_number[-4:]}"
     return account_number
-
-
-# print(get_mask_account("73654108430135874305"))
