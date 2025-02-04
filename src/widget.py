@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from .masks import get_mask_account, get_mask_card_number
+from src.masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(account: str) -> str:
@@ -15,26 +15,25 @@ def mask_account_card(account: str) -> str:
     Возвращает:
     str: Замаскированный номер карты/счета.
     """
+    # ("Cчет", "Номер счета не может быть пустым"),
+    if not account or account.strip() == "":
+        raise ValueError("Не введен номер карты/счета")
 
-    account_splitted = account.split()
-    account_number = account_splitted.pop()
+    if account.isdigit():
+        raise ValueError("Данные введены некорректно")
 
-    if len(account_number) < 20:
-        masked_account = get_mask_card_number(account_number)
-    else:
+    account_splitted = [item.strip() for item in account.split()]
+    account_name_list = [item for item in account_splitted if item.isalpha()]
+    account_name = ' '.join(account_name_list)
+    account_number = ' '.join([item for item in account_splitted if item not in account_name_list]) or ""
+
+    if account_name == 'Счет':
         masked_account = get_mask_account(account_number)
+    else:
+        masked_account = get_mask_card_number(account_number)
 
-    full_masked_account = " ".join(account_splitted + [masked_account])
+    full_masked_account = " ".join([account_name, masked_account])
     return full_masked_account
-
-
-# print(mask_account_card('Maestro 1596837868705199'))
-# print(mask_account_card('Счет 64686473678894779589'))
-# print(mask_account_card('MasterCard 7158300734726758'))
-# print(mask_account_card('Счет 35383033474447895560'))
-# print(mask_account_card('Visa Platinum 8990922113665229'))
-# print(mask_account_card('Visa Gold 5999414228426353'))
-# print(mask_account_card('Счет 73654108430135874305'))
 
 
 def get_date(date: str) -> str:
@@ -42,5 +41,3 @@ def get_date(date: str) -> str:
     formatted_date = date_object.strftime("%d.%m.%Y")
     return formatted_date
 
-
-# print(get_date("2024-03-11T02:26:18.671407"))
