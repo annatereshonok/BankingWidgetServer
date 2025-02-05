@@ -16,19 +16,25 @@ def filter_by_state(processed_info: List[Dict[str, Any]], state: str = "EXECUTED
 
     Возвращает:
         List[Dict[str, Any]]: Список словарей, отфильтрованных по заданному состоянию.
+
+    Исключения:
+        ValueError: Если `processed_info` не является списком.
+        ValueError: Если `processed_info` содержит не словари.
+        ValueError: Если `state` не является строкой.
     """
+    if not isinstance(processed_info, list):
+        raise ValueError("Подаваемые данные должны быть списком словарей")
+
+    for item in processed_info:
+        if not isinstance(item, dict):
+            raise ValueError("Каждый элемент в списке должен быть словарем")
+
+    if not isinstance(state, str):
+        raise ValueError("Состояние должно иметь строкое значение")
 
     filtered_info = [item for item in processed_info if item.get("state") == state]
+
     return filtered_info
-
-
-# processed = [
-#     {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
-#     {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
-#     {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
-#     {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}
-# ]
-# print(filter_by_state(processed, state='CANCELED'))
 
 
 def sort_by_date(processed_info: List[Dict[str, Any]], reverse_bool: bool = True) -> List[Dict[str, Any]]:
@@ -46,16 +52,27 @@ def sort_by_date(processed_info: List[Dict[str, Any]], reverse_bool: bool = True
 
     Возвращает:
         List[Dict[str, Any]]: Отсортированный список словарей по дате.
+
+    Исключения:
+        ValueError: Если `processed_info` не является списком.
+        ValueError: Если `processed_info` содержит элементы, которые не являются словарями.
+        ValueError: Если отсутствует ключ 'date' в словарях.
+        ValueError: Если значение 'date' не является строкой корректного формата.
+        ValueError: Если `reverse_bool` не является булевым значением.
     """
+    if not isinstance(processed_info, list):
+        raise ValueError("Подаваемые данные должны быть списком словарей")
+
+    for item in processed_info:
+        if not isinstance(item, dict):
+            raise ValueError("Каждый элемент в списке должен быть словарем")
+        if "date" not in item:
+            raise ValueError("Каждый словарь должен содержать ключ 'date'")
+        if not isinstance(item["date"], str):
+            raise ValueError("Значение 'date' должно быть строкой")
+
+    if not isinstance(reverse_bool, bool):
+        raise ValueError("Аргумент сортировки должен быть булевым значением")
 
     sorted_info = sorted(processed_info, key=lambda x: x["date"], reverse=reverse_bool)
     return sorted_info
-
-
-# processed = [
-#     {'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
-#     {'id': 939719570, 'state': 'EXECUTED', 'date': '2018-06-30T02:08:58.425572'},
-#     {'id': 594226727, 'state': 'CANCELED', 'date': '2018-09-12T21:27:25.241689'},
-#     {'id': 615064591, 'state': 'CANCELED', 'date': '2018-10-14T08:21:33.419441'}
-# ]
-# print(sort_by_date(processed))

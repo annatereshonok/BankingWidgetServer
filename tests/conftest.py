@@ -97,3 +97,128 @@ def params_for_widget_date_positive(request):
 )
 def params_for_widget_date_negative(request):
     return request.param
+
+
+@pytest.fixture(
+    params=[
+        (
+            [
+                {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
+                {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
+                {"id": 594226727, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
+                {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
+            ],
+            "EXECUTED",
+            [
+                {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
+                {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
+            ],
+        ),
+        (
+            [
+                {"id": 41428829, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
+                {"id": 939719570, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
+                {"id": 594226727, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
+                {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
+            ],
+            "CANCELED",
+            [
+                {"id": 594226727, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
+                {"id": 615064591, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
+            ],
+        ),
+        (
+            [
+                {"id": 123, "state": "PENDING", "date": "2020-01-01T12:00:00.000000"},
+            ],
+            "EXECUTED",
+            [],
+        ),
+        ([], "EXECUTED", []),
+    ]
+)
+def params_for_processing_state_positive(request):
+    return request.param
+
+
+@pytest.fixture(
+    params=[
+        (None, "EXECUTED", "Подаваемые данные должны быть списком словарей"),
+        (123, "EXECUTED", "Подаваемые данные должны быть списком словарей"),
+        ("string", "EXECUTED", "Подаваемые данные должны быть списком словарей"),
+        ({"id": 1, "state": "EXECUTED"}, "EXECUTED", "Подаваемые данные должны быть списком словарей"),
+        ([{"id": 1, "state": "EXECUTED"}, 123], "EXECUTED", "Каждый элемент в списке должен быть словарем"),
+        ([{"id": 1, "state": "EXECUTED"}, None], "EXECUTED", "Каждый элемент в списке должен быть словарем"),
+        ([{"id": 1, "state": "EXECUTED"}], None, "Состояние должно иметь строкое значение"),
+        ([{"id": 1, "state": "EXECUTED"}], 123, "Состояние должно иметь строкое значение"),
+        ([{"id": 1, "state": "EXECUTED"}], ["EXECUTED"], "Состояние должно иметь строкое значение"),
+    ]
+)
+def params_for_processing_state_negative(request):
+    return request.param
+
+
+@pytest.fixture(
+    params=[
+        (
+            [
+                {"id": 1, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
+                {"id": 2, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
+                {"id": 3, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
+                {"id": 4, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
+            ],
+            True,
+            [
+                {"id": 1, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
+                {"id": 4, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
+                {"id": 3, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
+                {"id": 2, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
+            ],
+        ),
+        (
+            [
+                {"id": 1, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
+                {"id": 2, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
+                {"id": 3, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
+                {"id": 4, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
+            ],
+            False,
+            [
+                {"id": 2, "state": "EXECUTED", "date": "2018-06-30T02:08:58.425572"},
+                {"id": 3, "state": "CANCELED", "date": "2018-09-12T21:27:25.241689"},
+                {"id": 4, "state": "CANCELED", "date": "2018-10-14T08:21:33.419441"},
+                {"id": 1, "state": "EXECUTED", "date": "2019-07-03T18:35:29.512364"},
+            ],
+        ),
+        ([], True, []),
+        ([], False, []),
+    ]
+)
+def params_for_processing_date_positive(request):
+    return request.param
+
+
+@pytest.fixture(
+    params=[
+        (None, True, "Подаваемые данные должны быть списком словарей"),
+        (123, True, "Подаваемые данные должны быть списком словарей"),
+        ("string", True, "Подаваемые данные должны быть списком словарей"),
+        ({"id": 1, "date": "2019-07-03T18:35:29.512364"}, True, "Подаваемые данные должны быть списком словарей"),
+        (
+            [{"id": 1, "date": "2019-07-03T18:35:29.512364"}, 123],
+            True,
+            "Каждый элемент в списке должен быть словарем",
+        ),
+        (
+            [{"id": 1, "date": "2019-07-03T18:35:29.512364"}, None],
+            True,
+            "Каждый элемент в списке должен быть словарем",
+        ),
+        ([{"id": 1}], True, "Каждый словарь должен содержать ключ 'date'"),
+        ([{"id": 1, "date": 123}], True, "Значение 'date' должно быть строкой"),
+        ([{"id": 1, "date": "2019-07-03T18:35:29.512364"}], None, "Аргумент сортировки должен быть булевым значением"),
+        ([{"id": 1, "date": "2019-07-03T18:35:29.512364"}], 123, "Аргумент сортировки должен быть булевым значением"),
+    ]
+)
+def params_for_processing_date_negative(request):
+    return request.param
