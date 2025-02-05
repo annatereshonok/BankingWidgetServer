@@ -91,16 +91,50 @@ bank-widget-backend/
 ├── src/
 │   ├── __init__.py
 │   ├── masks.py
-│   └── widget.py
+│   ├── widget.py
+│   └── processing.py
 ├── tests/
-│   └── __init__.py
+│   ├── __init__.py
+│   ├── confest.py
+│   ├── test_masks.py
+│   ├── test_widget.py
+│   └── test_processing.py
 ├── main.py
 ├── pyproject.toml
 ├── README.md
 └── .gitignore
 ```
 
+## Тестирование
 
+Этот проект использует `pytest` для написания и запуска тестов.
+
+
+## Запуск тестов
+
+Для запуска всех тестов выполните следующую команду:
+
+```sh
+pytest
+```
+
+## Покрытие кода тестами
+
+Для проверки покрытия кода тестами можно использовать `pytest-cov`:
+
+```sh
+pytest --cov=src
+```
+
+Где `src` — папка с исходным кодом.
+
+## Логирование и отчеты
+
+Для генерации HTML-отчёта о покрытии выполните:
+
+```sh
+pytest --cov=src --cov-report=html
+```
 
 ## Лицензия
 
