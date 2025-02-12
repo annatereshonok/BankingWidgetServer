@@ -20,11 +20,11 @@ def filter_by_currency(transactions: List[Dict[str, Any]], currency_code: str) -
     """
 
     if not isinstance(transactions, list):
-        raise ValueError("Транзакции должен быть списком")
+        raise ValueError("Транзакции должны быть списком словарей")
     if not all(isinstance(item, dict) for item in transactions):
         raise ValueError("Каждая транзакция должна быть словарем")
     if not isinstance(currency_code, str):
-        raise ValueError("Валюта операции (currency_code) должен быть строкой")
+        raise ValueError("Валюта операции (currency_code) должна быть строкой")
     if not currency_code.strip():
         raise ValueError("Валюта операции (currency_code) не может быть пустой")
 
@@ -53,7 +53,7 @@ def transaction_descriptions(transactions: List[Dict[str, Any]]) -> Iterator[Dic
     """
 
     if not isinstance(transactions, list):
-        raise ValueError("Транзакции должен быть списком")
+        raise ValueError("Транзакции должны быть списком словарей")
     if not all(isinstance(item, dict) for item in transactions):
         raise ValueError("Каждая транзакция должна быть словарем")
     if not all("description" in item for item in transactions):
@@ -87,6 +87,7 @@ def card_number_generator(start: int, end: int) -> Iterator[str]:
         raise ValueError("start не может быть больше end")
 
     card_numbers = (
-        f"{str(num)[0:4]} {str(num)[4:8]} {str(num)[8:12]} {str(num)[12:16]}" for num in range(start, end + 1)
+        f"{num:016d}"[:4] + " " + f"{num:016d}"[4:8] + " " + f"{num:016d}"[8:12] + " " + f"{num:016d}"[12:]
+        for num in range(start, end + 1)
     )
     return card_numbers
