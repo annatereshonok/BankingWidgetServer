@@ -323,9 +323,9 @@ def params_transaction_descriptions_negative(request, transactions_example_no_de
 
 @pytest.fixture(
     params=[
-        ("1", "100", "start и end должны быть целыми числами"),
-        (0, 1, "start и end должны быть в диапазоне от 1 до 9999999999999999"),
-        (10, 5, "start не может быть больше end"),
+        ("1", "100", "start и stop должны быть целыми числами"),
+        (0, 1, "start и stop должны быть в диапазоне от 1 до 9999999999999999"),
+        (10, 5, "start не может быть больше stop"),
     ],
 )
 def params_card_number_generator_negative(request):

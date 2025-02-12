@@ -63,7 +63,7 @@ def transaction_descriptions(transactions: List[Dict[str, Any]]) -> Iterator[Dic
     return filtered_transactions
 
 
-def card_number_generator(start: int, end: int) -> Iterator[str]:
+def card_number_generator(start: int, stop: int) -> Iterator[str]:
     """
     Генерирует номера банковских карт в формате XXXX XXXX XXXX XXXX.
 
@@ -74,20 +74,20 @@ def card_number_generator(start: int, end: int) -> Iterator[str]:
     Возвращает:
          Итератор, выдающий номера карт в формате XXXX XXXX XXXX XXXX.
     Исключения:
-         ValueError: Если `start` или `end` не являются целыми числами.
-         ValueError: Если `start` или `end` выходят за пределы допустимого диапазона.
-         ValueError: Если `start` больше `end`.
+         ValueError: Если `start` или `stop` не являются целыми числами.
+         ValueError: Если `start` или `stop` выходят за пределы допустимого диапазона.
+         ValueError: Если `start` больше `stop`.
     """
 
-    if not isinstance(start, int) or not isinstance(end, int):
-        raise ValueError("start и end должны быть целыми числами")
-    if start < 1 or end > 9999999999999999:
-        raise ValueError("start и end должны быть в диапазоне от 1 до 9999999999999999")
-    if start > end:
-        raise ValueError("start не может быть больше end")
+    if not isinstance(start, int) or not isinstance(stop, int):
+        raise ValueError("start и stop должны быть целыми числами")
+    if start < 1 or stop > 9999999999999999:
+        raise ValueError("start и stop должны быть в диапазоне от 1 до 9999999999999999")
+    if start > stop:
+        raise ValueError("start не может быть больше stop")
 
     card_numbers = (
         f"{num:016d}"[:4] + " " + f"{num:016d}"[4:8] + " " + f"{num:016d}"[8:12] + " " + f"{num:016d}"[12:]
-        for num in range(start, end + 1)
+        for num in range(start, stop + 1)
     )
     return card_numbers
