@@ -31,7 +31,7 @@ def filter_by_currency(transactions: List[Dict[str, Any]], currency_code: str) -
     filtered_transactions = (
         item
         for item in transactions
-        if item.get("operationAmount", {}).get("currency", {}).get("name", {}) == currency_code
+        if item.get("operationAmount", {}).get("currency", {}).get("code", {}) == currency_code
     )
     return filtered_transactions
 
