@@ -1,6 +1,9 @@
 from typing import Any, Dict, List
 
+from src.decorators import log
 
+
+@log(filename="log_processing.txt")
 def filter_by_state(processed_info: List[Dict[str, Any]], state: str = "EXECUTED") -> List[Dict[str, Any]]:
     """
     Фильтрует список словарей по заданному состоянию.
@@ -37,6 +40,7 @@ def filter_by_state(processed_info: List[Dict[str, Any]], state: str = "EXECUTED
     return filtered_info
 
 
+@log(filename=None)
 def sort_by_date(processed_info: List[Dict[str, Any]], reverse_bool: bool = True) -> List[Dict[str, Any]]:
     """
     Сортирует список словарей по дате.

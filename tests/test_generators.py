@@ -27,7 +27,6 @@ def test_filter_by_currency_positive(transactions_example):
 
 def test_filter_by_currency_negative(params_filter_by_currency_negative):
     transactions, currency, expected_exception_message = params_filter_by_currency_negative
-    print(transactions)
     with pytest.raises(ValueError) as exc_info:
         filter_by_currency(transactions, currency)
     assert str(exc_info.value) == expected_exception_message

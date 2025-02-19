@@ -1,8 +1,10 @@
 from datetime import datetime
 
+from src.decorators import log
 from src.masks import get_mask_account, get_mask_card_number
 
 
+@log(filename=None)
 def mask_account_card(account: str) -> str:
     """
     Маскирует номер кредитной карты/счета, отображая его в формате:
@@ -36,6 +38,7 @@ def mask_account_card(account: str) -> str:
     return full_masked_account
 
 
+@log(filename="log_widget.txt")
 def get_date(date: str) -> str:
     """
     Преобразует дату из формата ISO 8601 ("YYYY-MM-DDTHH:MM:SS.ssssss") в формат "DD.MM.YYYY".
