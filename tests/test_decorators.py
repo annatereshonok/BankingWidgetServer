@@ -8,8 +8,9 @@ from src.processing import filter_by_state, sort_by_date
 from src.widget import get_date, mask_account_card
 
 
-def check_log_output(captured, expected_output):
+def check_log_output(capsys, expected_output):
     """Проверка, что лог в captured.out соответствует ожидаемому"""
+    captured = capsys.readouterr()
     assert captured.out == expected_output
 
 
@@ -23,19 +24,13 @@ def check_log_in_file(filename, expected_output):
 def check_succesfull_log_console(func, *args, expected_output, capsys):
     """Тестирует успешное выполнение функции и логи в captured.out"""
     func(*args)
-    captured = capsys.readouterr()
-    check_log_output(captured, expected_output)
+    check_log_output(capsys, expected_output)
 
 
 def check_error_log(func, *args, exception_type):
     """Тестирует ошибку в выполнении функции и логи в captured.out"""
     with pytest.raises(exception_type):
         func(*args)
-
-
-def check_error_log_concole(expected_output, capsys):
-    captured = capsys.readouterr()
-    check_log_output(captured, expected_output)
 
 
 def test_log_decorator(capsys):
@@ -53,7 +48,7 @@ def test_log_decorator(capsys):
         "[ERROR] Ошибка в функции 'get_mask_account': ValueError. Входные параметры: ('700079228960636132',), {}\n\n"
     )
     check_error_log(get_mask_account, account, exception_type=ValueError)
-    check_error_log_concole(expected_output, capsys)
+    check_log_output(capsys, expected_output)
 
     # Тестирование get_mask_card_number
     expected_output = (
@@ -87,7 +82,7 @@ def test_log_decorator(capsys):
         "Входные параметры: ('Maestro 73654108430135874305',), {}\n\n"
     )
     check_error_log(mask_account_card, card_number, exception_type=ValueError)
-    check_error_log_concole(expected_output, capsys)
+    check_log_output(capsys, expected_output)
 
     # Тестирование get_date
     expected_output = (
