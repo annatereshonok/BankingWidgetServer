@@ -1,3 +1,7 @@
+from src.decorators import log
+
+
+@log(filename="log_masks.txt")
 def get_mask_card_number(card_number: str) -> str:
     """
     Маскирует номер кредитной карты, отображая его в формате:
@@ -14,8 +18,6 @@ def get_mask_card_number(card_number: str) -> str:
 
     card_number = str(card_number).replace(" ", "")
 
-    print(card_number)
-
     if not card_number.isdigit():
         raise ValueError("Номер карты должен состоять только из цифр")
 
@@ -26,6 +28,7 @@ def get_mask_card_number(card_number: str) -> str:
     return masked_number
 
 
+@log(filename=None)
 def get_mask_account(account_number: str) -> str:
     """
     Маскирует номер счета, отображая его в формате:
