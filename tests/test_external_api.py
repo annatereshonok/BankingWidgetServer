@@ -23,8 +23,6 @@ def test_currency_converter_success_rub(transaction_currency_converter_rub):
 
 @patch("src.external_api.requests.get", side_effect=requests.exceptions.HTTPError())
 def test_currency_converter_failed_request(mocked_get, transaction_currency_converter_usd):
-    mocked_get.return_value.status_code = 403
-
     with pytest.raises(requests.exceptions.RequestException, match="Ошибка при запросе к API"):
         currency_converter(transaction_currency_converter_usd)
 
