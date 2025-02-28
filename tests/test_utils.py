@@ -26,11 +26,9 @@ def test_read_json_file_not_found(mock_file):
     assert read_json("missing_file.json") == []
 
 
-@patch("builtins.open", new_callable=mock_open, read_data='[{"id": 1, "amount": 100}]')
-@patch("json.load", side_effect=json.JSONDecodeError("Expecting value", doc="", pos=0))
-def test_read_json_invalid_json(mock_json_load, mock_file):
+@patch("builtins.open", new_callable=mock_open, read_data="[{'id': 1, 'amount': 100}]")
+def test_read_json_invalid_json(mock_json_load):
     assert read_json("dummy_path.json") == []
-    mock_file.assert_called_once()
     mock_json_load.assert_called_once()
 
 
