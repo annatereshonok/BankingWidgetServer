@@ -329,3 +329,30 @@ def params_transaction_descriptions_negative(request, transactions_example_no_de
 )
 def params_card_number_generator_negative(request):
     return request.param
+
+
+@pytest.fixture
+def transaction_currency_converter_usd():
+    return {"id": 441945886, "operationAmount": {"amount": "100", "currency": {"code": "USD"}}}
+
+
+@pytest.fixture
+def transaction_currency_converter_rub():
+    return {"id": 441945886, "operationAmount": {"amount": "100", "currency": {"code": "RUB"}}}
+
+
+@pytest.fixture(
+    params=[
+        ([], "Транзакция должна быть словарем."),
+        (
+            {"id": 441945886, "operationAmount": {"currency": {"code": "USD"}}},
+            "Ошибка в структуре данных: отсутствуют нужные ключи.",
+        ),
+        (
+            {"id": 441945886, "operationAmount": {"amount": "100"}},
+            "Ошибка в структуре данных: отсутствуют нужные ключи.",
+        ),
+    ],
+)
+def transaction_currency_converter_keys(request):
+    return request.param

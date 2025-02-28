@@ -149,6 +149,43 @@ card_number_generator(1, 5)
 
 Обработка исключений:
 - Если в процессе выполнения функции возникнет исключение, оно будет залогировано с указанием типа ошибки, а сама ошибка будет снова выброшена.
+
+
+### 10. `Функция currency_converter`
+Функция currency_converter используется для конвертации суммы транзакции в рубли (RUB), если валюта исходной суммы — USD или EUR. 
+
+Для получения актуального курса валют используется API Exchange Rates Data.
+
+**Пример:**
+```python
+transaction = {
+    "operationAmount": {
+        "amount": "100",
+        "currency": {"code": "USD"}
+    }
+}
+
+converted_amount = currency_converter(transaction)
+print(converted_amount)  # Например, 9500.0 (зависит от курса)
+```
+Создайте файл .env и добавьте API-ключ. Пример .env файла можно найти в .env.example.
+
+### 11. Функция `read_json`
+Функция read_json загружает данные о финансовых транзакциях из JSON-файла.
+
+**Пример:**
+
+```python
+transactions = read_json("transactions.json")
+
+print(transactions)
+# Пример вывода:
+# [
+#     {"id": 1, "amount": 100, "currency": "USD"},
+#     {"id": 2, "amount": 500, "currency": "EUR"}
+# ]
+```
+
 ## Установка
 
 Для установки зависимостей используйте [Poetry](https://python-poetry.org/).
@@ -185,7 +222,9 @@ bank-widget-backend/
 │   ├── widget.py
 │   ├── generators.py
 │   ├── decorators.py
-│   └── processing.py
+│   ├── processing.py
+│   ├── utils.py
+│   └── external_api.py
 ├── tests/
 │   ├── __init__.py
 │   ├── confest.py
@@ -193,7 +232,9 @@ bank-widget-backend/
 │   ├── test_widget.py
 │   ├── test_generators.py
 │   ├── test_decorators.py
-│   └── test_processing.py
+│   ├── test_processing.py
+│   ├── test_utils.py
+│   └── test_external_api.py
 ├── main.py
 ├── pyproject.toml
 ├── README.md
