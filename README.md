@@ -176,7 +176,39 @@ print(converted_amount)  # Например, 9500.0 (зависит от кур�
 **Пример:**
 
 ```python
-transactions = read_json("transactions.json")
+transactions = read_json("data/transactions.json")
+
+print(transactions)
+# Пример вывода:
+# [
+#     {"id": 1, "amount": 100, "currency": "USD"},
+#     {"id": 2, "amount": 500, "currency": "EUR"}
+# ]
+```
+
+### 12. Функция `read_from_csv`
+Функция read_from_csv загружает данные о финансовых транзакциях из CSV-файла.
+
+**Пример:**
+
+```python
+transactions = read_from_csv("data/transactions.csv")
+
+print(transactions)
+# Пример вывода:
+# [
+#     {"id": 1, "amount": 100, "currency": "USD"},
+#     {"id": 2, "amount": 500, "currency": "EUR"}
+# ]
+```
+
+### 13. Функция `read_from_xlsx`
+Функция read_from_csv загружает данные о финансовых транзакциях из XLSX-файла.
+
+**Пример:**
+
+```python
+transactions = read_from_xlsx("data/transactions.csv")
 
 print(transactions)
 # Пример вывода:
@@ -224,7 +256,8 @@ bank-widget-backend/
 │   ├── decorators.py
 │   ├── processing.py
 │   ├── utils.py
-│   └── external_api.py
+│   ├── external_api.py
+│   └── file_readers.py
 ├── tests/
 │   ├── __init__.py
 │   ├── confest.py
@@ -234,7 +267,8 @@ bank-widget-backend/
 │   ├── test_decorators.py
 │   ├── test_processing.py
 │   ├── test_utils.py
-│   └── test_external_api.py
+│   ├── test_external_api.py
+│   └── test_file_readers.py
 ├── main.py
 ├── pyproject.toml
 ├── README.md

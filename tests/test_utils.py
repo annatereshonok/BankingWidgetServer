@@ -1,3 +1,4 @@
+import json
 import os
 from unittest.mock import mock_open, patch
 
@@ -35,6 +36,6 @@ def test_read_json_invalid_json(mock_json_load):
     mock_json_load.assert_called_once()
 
 
-@patch("builtins.open", side_effect=OSError)
-def test_read_json_os_error(mock_file):
+@patch("builtins.open", side_effect=json.JSONDecodeError)
+def test_read_json_error(mock_file):
     assert read_json("dummy_path.json") == []
