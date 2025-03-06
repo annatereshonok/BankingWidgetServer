@@ -68,7 +68,3 @@ def get_mask_account(account_number: str) -> str:
     masks_logger.info(f"Функция get_mask_account успешно выполнена. Результат: {account_number}")
 
     return account_number
-
-
-if __name__ == "__main__":
-    print(get_mask_card_number(""))
