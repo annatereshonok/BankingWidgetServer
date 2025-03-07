@@ -271,6 +271,14 @@ def transactions_example():
             "from": "Visa Platinum 1246377376343588",
             "to": "Счет 14211924144426031657",
         },
+        {
+            "id": 587085106,
+            "state": "EXECUTED",
+            "date": "2018-03-23T10:45:06.972075",
+            "operationAmount": {"amount": "48223.05", "currency": {"name": "руб.", "code": "RUB"}},
+            "description": "Открытие вклада",
+            "to": "Счет 41421565395219882431",
+        },
     ]
     return data
 
@@ -356,3 +364,25 @@ def transaction_currency_converter_rub():
 )
 def transaction_currency_converter_keys(request):
     return request.param
+
+
+@pytest.fixture(params=[0, 1])
+def params_for_search_transactions_key(request, transactions_example):
+    test_cases = [
+        (transactions_example, "открытие", 1),
+        (transactions_example, "пришло много денег", 0),
+    ]
+    return test_cases[request.param]
+
+
+@pytest.fixture(params=[0, 1])
+def params_for_search_transactions_category(request, transactions_example):
+    test_cases = [
+        (transactions_example, ["открытие вклада"], {"Открытие вклада": 1}),
+        (
+            transactions_example,
+            ["открытие вклада", "Перевод со счета на счет"],
+            {"Перевод со счета на счет": 2, "Открытие вклада": 1},
+        ),
+    ]
+    return test_cases[request.param]
