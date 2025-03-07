@@ -218,6 +218,49 @@ print(transactions)
 # ]
 ```
 
+### 14. Функция `search_transactions_key`
+Функция search_transactions_key принимает список словарей с данными о банковских операциях и строку поиска, а возвращает список словарей, у которых в описании есть данная строка.
+
+**Пример:**
+
+```python
+transactions = search_transactions_key(transactions, search_info='открытие')
+
+print(transactions)
+# Пример вывода:
+# {
+#     "id": 587085106,
+#     "state": "EXECUTED",
+#     "date": "2018-03-23T10:45:06.972075",
+#     "operationAmount": {
+#       "amount": "48223.05",
+#       "currency": {
+#         "name": "руб.",
+#         "code": "RUB"
+#       }
+#     },
+#     "description": "Открытие вклада",
+#     "to": "Счет 41421565395219882431"
+#   },
+```
+
+### 15. Функция `search_transactions_category`
+Функция search_transactions_category принимает список словарей с данными о банковских операциях и список категорий операций, 
+а возвращает словарь, в котором ключи — это названия категорий, а значения — это количество операций в каждой категории.
+
+**Пример:**
+
+```python
+transactions = search_transactions_category(transactions, categories=['Открытие вклада', 'Перевод организации'])
+
+print(transactions)
+# Пример вывода:
+# {'Открытие вклада': 3, 'Перевод организации': 1}
+```
+
+### 16. Функция `main`
+Функция main отвечает за основную логику проекта и связывает функциональности между собой.
+
 ## Установка
 
 Для установки зависимостей используйте [Poetry](https://python-poetry.org/).
@@ -257,7 +300,8 @@ bank-widget-backend/
 │   ├── processing.py
 │   ├── utils.py
 │   ├── external_api.py
-│   └── file_readers.py
+│   ├── file_readers.py
+│   └── search_transactions.py
 ├── tests/
 │   ├── __init__.py
 │   ├── confest.py
@@ -268,7 +312,9 @@ bank-widget-backend/
 │   ├── test_processing.py
 │   ├── test_utils.py
 │   ├── test_external_api.py
-│   └── test_file_readers.py
+│   ├── test_file_readers.py
+│   ├── test_search_transactions.py
+│   └── test_main.py
 ├── main.py
 ├── pyproject.toml
 ├── README.md
