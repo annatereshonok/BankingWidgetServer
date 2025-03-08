@@ -105,7 +105,6 @@ def main() -> None:
     print(f"Всего банковских операций в выборке: {len(list(transactions))}")
 
     for transaction in transactions:
-
         date = get_date(transaction.get("date"))
         description = transaction.get("description")
         if choice_read == "1":

@@ -13,7 +13,6 @@ INPUTS = {
 @patch("builtins.input", side_effect=INPUTS["test_main_json"])
 def test_main_json(mock_input, mock_print):
     main()
-
     assert any("Для обработки выбран JSON-файл." in call.args[0] for call in mock_print.call_args_list)
     assert any("Операции отфильтрованы по статусу" in call.args[0] for call in mock_print.call_args_list)
 
