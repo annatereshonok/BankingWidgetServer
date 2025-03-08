@@ -61,7 +61,7 @@ def get_date(date: str) -> str:
         raise ValueError("Дата не может быть пустой")
 
     try:
-        date_object = datetime.strptime(date, "%Y-%m-%dT%H:%M:%S.%f")
+        date_object = datetime.strptime(date.replace("Z", ".000000"), "%Y-%m-%dT%H:%M:%S.%f")
         return date_object.strftime("%d.%m.%Y")
     except ValueError:
         raise ValueError("Некорректный формат даты")
